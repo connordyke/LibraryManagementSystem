@@ -19,7 +19,8 @@ namespace LibraryManagementSystem
 
         private void Dashboard_Load(object sender, EventArgs e)
         {
-
+            //Get the name from the logged in user and display it in the corner
+            lblName.Text = "Welcome, " + LibraryDB.currentUser.Name + "!";
         }
 
         private void btnStudentSearch_Click(object sender, EventArgs e)
@@ -27,6 +28,11 @@ namespace LibraryManagementSystem
             StudentSearch studentSearch = new StudentSearch();
             studentSearch.Show();
             this.Hide();
+        }
+
+        private void btnBookSeach_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

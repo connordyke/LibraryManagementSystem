@@ -9,13 +9,25 @@ namespace LibraryManagementSystem
     class User
     {
 
+        private int id;
+        private String name;
         private String username;
-        private String password;
+        private String isAdmin;
+        private String designation;
 
-        public User(string username, string password)
+        public User(int id, string name, string username, string isAdmin, string designation)
         {
-            this.username = username;
-            this.password = password;
+            Id = id;
+            Name = name;
+            Username = username;
+            IsAdmin = isAdmin;
+            Designation = designation;
         }
+
+        public int Id { get => id; set => id = value; }
+        public string Name { get => name; set => name = value; }
+        public string Username { get => username; set => username = value; }
+        public string IsAdmin { get => isAdmin; set => isAdmin = value; }
+        public string Designation { get => designation; set => designation = value; }
     }
 }
