@@ -13,17 +13,15 @@ namespace LibraryManagementSystem
         private String student_name;
         private String gender;
         private String dob;
-        private int borrower_id;
         private String dept;
         private String contactNum;
 
-        public Student(int student_id, string student_name, string gender, string dob, int borrower_id, string dept, string contactNum)
+        public Student(int student_id, string student_name, string gender, string dob, string dept, string contactNum)
         {
             this.student_id = student_id;
             this.student_name = student_name;
             this.gender = gender;
             this.dob = dob;
-            this.borrower_id = borrower_id;
             this.dept = dept;
             this.contactNum = contactNum;
         }
@@ -32,7 +30,6 @@ namespace LibraryManagementSystem
         public string Student_name { get => student_name; set => student_name = value; }
         public string Gender { get => gender; set => gender = value; }
         public string Dob { get => dob; set => dob = value; }
-        public int Borrower_id { get => borrower_id; set => borrower_id = value; }
         public string Dept { get => dept; set => dept = value; }
         public string ContactNum { get => contactNum; set => contactNum = value; }
 

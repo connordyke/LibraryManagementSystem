@@ -32,6 +32,13 @@ namespace LibraryManagementSystem
 
         private void btnBookSeach_Click(object sender, EventArgs e)
         {
+            BookSearch bookSearch = new BookSearch();
+            bookSearch.Show();
+            this.Hide();
+        }
+
+        private void btnAvail_Click(object sender, EventArgs e)
+        {
 
         }
     }

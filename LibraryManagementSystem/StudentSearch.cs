@@ -77,7 +77,7 @@ namespace LibraryManagementSystem
             String dept = cmbDepartment.Text;
 
             //Create a new student with properties set
-            Student searchStudent = new Student(id, name, gender, DOB, 0, dept, "");
+            Student searchStudent = new Student(id, name, gender, DOB, dept, "");
 
             //Create a connection to the database and search for the student
             LibraryDB student = new LibraryDB();
@@ -87,16 +87,19 @@ namespace LibraryManagementSystem
             //Load the student data into the data grid view
             dgvStudent.DataSource = studentSearchResult;
 
+            lblNumRecords.Text = "Number of Students: " + studentSearchResult.Count;
+
+            //Column headers
             dgvStudent.Columns[0].HeaderText = "Student ID";
             dgvStudent.Columns[1].HeaderText = "Student Name";
+            dgvStudent.Columns[2].HeaderText = "Gender";
             dgvStudent.Columns[3].HeaderText = "Date of Birth";
-            dgvStudent.Columns[4].HeaderText = "Borrower ID";
-            dgvStudent.Columns[5].HeaderText = "Department";
-            dgvStudent.Columns[6].HeaderText = "Contact Number";
-            dgvStudent.Columns[3].DefaultCellStyle.Format = "MM/dd/yyyy"; ;
+            dgvStudent.Columns[4].HeaderText = "Department";
+            dgvStudent.Columns[5].HeaderText = "Contact Number";
 
         }
 
+        //Doesn't let the user enter in numbers
         private void txtID_TextChanged(object sender, EventArgs e)
         {
             if (System.Text.RegularExpressions.Regex.IsMatch(txtID.Text, "[^0-9]"))
@@ -105,5 +108,29 @@ namespace LibraryManagementSystem
             }
         }
 
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            //Clear all text boxes
+            txtID.Text = "";
+            txtName.Text = "";
+            cmbGender.Text = "";
+            txtDOB.Text = "";
+            cmbDepartment.Text = "";
+
+            //Give focus to ID text box (first text box)
+            txtID.Focus();
+
+            //Click search button to refill datagrid view
+            btnSearch.PerformClick();
+        }
+
+        private void txtDOB_TypeValidationCompleted(object sender, TypeValidationEventArgs e)
+        {
+            if (!e.IsValidInput)
+            {
+                tipDate.ToolTipTitle = "Invalid Date";
+                tipDate.Show("The data you supplied must be a valid date in the format mm/dd/yyyy.", txtDOB, 10, 10);
+            }
+        }
     }
 }

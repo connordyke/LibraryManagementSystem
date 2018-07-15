@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgvStudent = new System.Windows.Forms.DataGridView();
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,23 +40,12 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.cmbGender = new System.Windows.Forms.ComboBox();
             this.txtDOB = new System.Windows.Forms.MaskedTextBox();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.dgvStudent = new System.Windows.Forms.DataGridView();
+            this.lblNumRecords = new System.Windows.Forms.Label();
+            this.tipDate = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStudent)).BeginInit();
             this.SuspendLayout();
-            // 
-            // dgvStudent
-            // 
-            this.dgvStudent.AllowUserToAddRows = false;
-            this.dgvStudent.AllowUserToDeleteRows = false;
-            this.dgvStudent.AllowUserToOrderColumns = true;
-            this.dgvStudent.AllowUserToResizeColumns = false;
-            this.dgvStudent.AllowUserToResizeRows = false;
-            this.dgvStudent.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvStudent.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            this.dgvStudent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvStudent.Location = new System.Drawing.Point(62, 152);
-            this.dgvStudent.Name = "dgvStudent";
-            this.dgvStudent.Size = new System.Drawing.Size(732, 268);
-            this.dgvStudent.TabIndex = 1;
             // 
             // label1
             // 
@@ -137,7 +126,7 @@
             // btnSearch
             // 
             this.btnSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSearch.Location = new System.Drawing.Point(345, 82);
+            this.btnSearch.Location = new System.Drawing.Point(284, 82);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(143, 47);
             this.btnSearch.TabIndex = 12;
@@ -163,6 +152,42 @@
             this.txtDOB.Size = new System.Drawing.Size(181, 26);
             this.txtDOB.TabIndex = 15;
             this.txtDOB.ValidatingType = typeof(System.DateTime);
+            this.txtDOB.TypeValidationCompleted += new System.Windows.Forms.TypeValidationEventHandler(this.txtDOB_TypeValidationCompleted);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClear.Location = new System.Drawing.Point(455, 82);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(143, 47);
+            this.btnClear.TabIndex = 16;
+            this.btnClear.Text = "&Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            // 
+            // dgvStudent
+            // 
+            this.dgvStudent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvStudent.Location = new System.Drawing.Point(99, 146);
+            this.dgvStudent.Name = "dgvStudent";
+            this.dgvStudent.RowHeadersVisible = false;
+            this.dgvStudent.Size = new System.Drawing.Size(642, 292);
+            this.dgvStudent.TabIndex = 17;
+            // 
+            // lblNumRecords
+            // 
+            this.lblNumRecords.AutoSize = true;
+            this.lblNumRecords.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNumRecords.Location = new System.Drawing.Point(13, 115);
+            this.lblNumRecords.Name = "lblNumRecords";
+            this.lblNumRecords.Size = new System.Drawing.Size(175, 20);
+            this.lblNumRecords.TabIndex = 18;
+            this.lblNumRecords.Text = "Number of Students:";
+            // 
+            // tipDate
+            // 
+            this.tipDate.IsBalloon = true;
+            this.tipDate.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
             // StudentSearch
             // 
@@ -170,6 +195,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(876, 450);
+            this.Controls.Add(this.lblNumRecords);
+            this.Controls.Add(this.dgvStudent);
+            this.Controls.Add(this.btnClear);
             this.Controls.Add(this.txtDOB);
             this.Controls.Add(this.cmbGender);
             this.Controls.Add(this.btnSearch);
@@ -181,7 +209,6 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.dgvStudent);
             this.MaximizeBox = false;
             this.Name = "StudentSearch";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -194,7 +221,6 @@
         }
 
         #endregion
-        private System.Windows.Forms.DataGridView dgvStudent;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -206,5 +232,9 @@
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.ComboBox cmbGender;
         private System.Windows.Forms.MaskedTextBox txtDOB;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.DataGridView dgvStudent;
+        private System.Windows.Forms.Label lblNumRecords;
+        private System.Windows.Forms.ToolTip tipDate;
     }
 }

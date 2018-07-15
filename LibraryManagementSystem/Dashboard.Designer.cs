@@ -30,12 +30,12 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabStudents = new System.Windows.Forms.TabPage();
+            this.btnStudenBorrow = new System.Windows.Forms.Button();
             this.btnStudentSearch = new System.Windows.Forms.Button();
             this.tabBooks = new System.Windows.Forms.TabPage();
             this.btnUnavailable = new System.Windows.Forms.Button();
             this.btnAvail = new System.Windows.Forms.Button();
             this.btnBookSeach = new System.Windows.Forms.Button();
-            this.btnStudenBorrow = new System.Windows.Forms.Button();
             this.lblName = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabStudents.SuspendLayout();
@@ -64,6 +64,15 @@
             this.tabStudents.TabIndex = 0;
             this.tabStudents.Text = "Student Information";
             this.tabStudents.UseVisualStyleBackColor = true;
+            // 
+            // btnStudenBorrow
+            // 
+            this.btnStudenBorrow.Location = new System.Drawing.Point(214, 21);
+            this.btnStudenBorrow.Name = "btnStudenBorrow";
+            this.btnStudenBorrow.Size = new System.Drawing.Size(162, 54);
+            this.btnStudenBorrow.TabIndex = 1;
+            this.btnStudenBorrow.Text = "Student";
+            this.btnStudenBorrow.UseVisualStyleBackColor = true;
             // 
             // btnStudentSearch
             // 
@@ -104,6 +113,7 @@
             this.btnAvail.TabIndex = 2;
             this.btnAvail.Text = "Available Books";
             this.btnAvail.UseVisualStyleBackColor = true;
+            this.btnAvail.Click += new System.EventHandler(this.btnAvail_Click);
             // 
             // btnBookSeach
             // 
@@ -114,15 +124,6 @@
             this.btnBookSeach.Text = "Book Search";
             this.btnBookSeach.UseVisualStyleBackColor = true;
             this.btnBookSeach.Click += new System.EventHandler(this.btnBookSeach_Click);
-            // 
-            // btnStudenBorrow
-            // 
-            this.btnStudenBorrow.Location = new System.Drawing.Point(214, 21);
-            this.btnStudenBorrow.Name = "btnStudenBorrow";
-            this.btnStudenBorrow.Size = new System.Drawing.Size(162, 54);
-            this.btnStudenBorrow.TabIndex = 1;
-            this.btnStudenBorrow.Text = "Student";
-            this.btnStudenBorrow.UseVisualStyleBackColor = true;
             // 
             // lblName
             // 
