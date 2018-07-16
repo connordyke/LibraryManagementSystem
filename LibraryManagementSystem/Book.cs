@@ -17,26 +17,23 @@ namespace LibraryManagementSystem
         private int numCopiesCurrent;
         private String category;
         private String pubYear;
+        private String outOfStock;
+        private int shelfNum;
+        private int floorNum;
 
-        public Book(int isbn, string bookTitle, string language, string category, string pubYear)
+        public Book(int isbn, string bookTitle, string language, string bindingName, int numCopies, int numCopiesCurrent, string category, string pubYear, string outOfStock, int shelfNum, int floorNum)
         {
-            this.isbn = isbn;
-            this.bookTitle = bookTitle;
-            this.language = language;
-            this.category = category;
-            this.pubYear = pubYear;
-        }
-
-        public Book(int isbn, string bookTitle, string language, string bindingName, int numCopies, int numCopiesCurrent, string category, string pubYear)
-        {
-            this.isbn = isbn;
-            this.bookTitle = bookTitle;
-            this.language = language;
-            this.bindingName = bindingName;
-            this.numCopies = numCopies;
-            this.numCopiesCurrent = numCopiesCurrent;
-            this.category = category;
-            this.pubYear = pubYear;
+            this.Isbn = isbn;
+            this.BookTitle = bookTitle;
+            this.Language = language;
+            this.BindingName = bindingName;
+            this.NumCopies = numCopies;
+            this.NumCopiesCurrent = numCopiesCurrent;
+            this.Category = category;
+            this.PubYear = pubYear;
+            this.OutOfStock = outOfStock;
+            this.ShelfNum = shelfNum;
+            this.FloorNum = floorNum;
         }
 
         public int Isbn { get => isbn; set => isbn = value; }
@@ -47,5 +44,9 @@ namespace LibraryManagementSystem
         public int NumCopiesCurrent { get => numCopiesCurrent; set => numCopiesCurrent = value; }
         public string Category { get => category; set => category = value; }
         public string PubYear { get => pubYear; set => pubYear = value; }
+        public string OutOfStock { get => outOfStock; set => outOfStock = value; }
+        public int ShelfNum { get => shelfNum; set => shelfNum = value; }
+        public int FloorNum { get => floorNum; set => floorNum = value; }
     }
+
 }

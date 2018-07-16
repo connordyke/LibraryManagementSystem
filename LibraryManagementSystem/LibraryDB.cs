@@ -262,9 +262,12 @@ namespace LibraryManagementSystem
 
         }
 
-
-
-        public List<Book> bookSearch(Book book)
+        /// <summary>
+        /// Dyanmic query to search for the book the user is looking for
+        /// </summary>
+        /// <param name="book">Book the user is looking for (object with properties)</param>
+        /// <returns>List of books that match the query</returns>
+        public List<Book> BookSearch(Book book)
         {
             //Putting book information into variables to check whether they're empty or not
             int ISBN = book.Isbn;
@@ -272,10 +275,12 @@ namespace LibraryManagementSystem
             String lang = book.Language;
             String pubYear = book.PubYear;
             String category = book.Category;
+            String outOfStock = book.OutOfStock;
 
-            string query = "SELECT ISBN_Code, Book_Title, Language, Binding_Name, No_Copies_Actual, No_Copies_Current, Category_Name, Publication_year FROM Book_Details" +
+            string query = "SELECT ISBN_Code, Book_Title, Language, Binding_Name, No_Copies_Actual, No_Copies_Current, Category_Name, Publication_year, Shelf_no, Floor_no FROM Book_Details" +
                 " JOIN Category_Details ON Book_Details.Category_ID = Category_Details.Category_ID" +
-                " JOIN Binding_Details ON Book_Details.Binding_ID = Binding_Details.Binding_ID {0}";
+                " JOIN Binding_Details ON Book_Details.Binding_ID = Binding_Details.Binding_ID " +
+                " JOIN Shelf_Details on Book_Details.Shelf_id = Shelf_Details.Shelf_id {0}";
             string whereClause = string.Empty;
 
             //Adding an AND onto the WHERE clause if the field isn't empty
@@ -293,6 +298,9 @@ namespace LibraryManagementSystem
 
             if (category != "")
                 whereClause = AddCondition(whereClause, " AND", "Category_Name = '" + category + "'");
+
+            if (outOfStock != "")
+                whereClause = AddCondition(whereClause, " AND", "OutOfStock = '" + outOfStock + "'");
 
             //Final query put together
             string finalQuery = String.Format(query, whereClause);
@@ -316,7 +324,7 @@ namespace LibraryManagementSystem
             {
 
                 //Create the current student by getting their information from the database
-                Book currentBook = new Book(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), Int32.Parse(reader[4].ToString()), Int32.Parse(reader[5].ToString()), reader[6].ToString(), reader[7].ToString());
+                Book currentBook = new Book(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), Int32.Parse(reader[4].ToString()), Int32.Parse(reader[5].ToString()), reader[6].ToString(), reader[7].ToString(), "", Int32.Parse(reader[8].ToString()), Int32.Parse(reader[9].ToString()));
                 //Put the current student into the list
                 books.Add(currentBook);
             }
@@ -329,7 +337,6 @@ namespace LibraryManagementSystem
 
 
         }
-
 
 
         /// <summary>

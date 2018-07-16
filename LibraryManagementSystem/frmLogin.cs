@@ -35,7 +35,7 @@ namespace LibraryManagementSystem
 
             if (loginSuccess)
             {
-                Dashboard dashboard = new Dashboard();
+                frmDashboard dashboard = new frmDashboard();
                 dashboard.Show();
                 this.Hide();
             }
