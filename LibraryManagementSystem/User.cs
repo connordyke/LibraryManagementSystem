@@ -6,28 +6,19 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementSystem
 {
-    class User
+    public static class CurrentUser
     {
 
-        private int id;
-        private String name;
-        private String username;
-        private String isAdmin;
-        private String designation;
+        private static int id;
+        private static String name;
+        private static String username;
+        private static String isAdmin;
+        private static String designation;
 
-        public User(int id, string name, string username, string isAdmin, string designation)
-        {
-            Id = id;
-            Name = name;
-            Username = username;
-            IsAdmin = isAdmin;
-            Designation = designation;
-        }
-
-        public int Id { get => id; set => id = value; }
-        public string Name { get => name; set => name = value; }
-        public string Username { get => username; set => username = value; }
-        public string IsAdmin { get => isAdmin; set => isAdmin = value; }
-        public string Designation { get => designation; set => designation = value; }
+        public static int Id { get => id; set => id = value; }
+        public static string Name { get => name; set => name = value; }
+        public static string Username { get => username; set => username = value; }
+        public static string IsAdmin { get => isAdmin; set => isAdmin = value; }
+        public static string Designation { get => designation; set => designation = value; }
     }
 }

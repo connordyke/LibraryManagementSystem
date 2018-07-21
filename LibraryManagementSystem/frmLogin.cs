@@ -21,6 +21,20 @@ namespace LibraryManagementSystem
         private void frmLogin_Load(object sender, EventArgs e)
         {
             
+            Boolean canConnect = false;
+            LibraryDB databaseConnection = new LibraryDB();
+            canConnect = databaseConnection.CheckConnection();
+
+            //If we can't connect to database, disable all login fields and display an error message
+            if (!canConnect)
+            {
+                txtUsername.Enabled = false;
+                txtPassword.Enabled = false;
+                btnLogin.Enabled = false;
+                MessageBox.Show("Cannot establish connection to database, please contact your Database Administrator", "Connection Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
+
         }
 
         private void btnLogin_Click(object sender, EventArgs e)

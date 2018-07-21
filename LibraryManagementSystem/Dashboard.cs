@@ -23,7 +23,7 @@ namespace LibraryManagementSystem
         private void Dashboard_Load(object sender, EventArgs e)
         {
             //Get the name from the logged in user and display it in the corner
-            lblName.Text = "Welcome, " + LibraryDB.currentUser.Name + "!";
+            lblName.Text = "Welcome, " + CurrentUser.Name + "!";
 
             //List of strings (departments in database)
             List<String> departmentsList = new List<String>();
@@ -43,6 +43,8 @@ namespace LibraryManagementSystem
 
             //Only way to make the date time picker empty
             dtpDOB.CustomFormat = " ";
+            //Maximum date it today
+            dtpDOB.MaxDate = DateTime.Now;
 
             //Perform a search with no filter, just to show all students
             btnSearchStudent.PerformClick();
@@ -62,13 +64,15 @@ namespace LibraryManagementSystem
             cmbCategory.DataSource = categoriesList;
 
             //Empty the combo boxes to give user a blank slate to search on
-            cmbLang.Text = " ";
-            cmbCategory.Text = " ";
-            cmbDepartment.Text = " ";
-            cmbGender.Text = " ";
+            cmbLang.SelectedIndex = -1;
+            cmbCategory.SelectedIndex = -1;
+            cmbDepartment.SelectedIndex = -1;
+            cmbGender.SelectedIndex = -1;
 
             //Only way to make the date time picker empty
             dtpPubYear.CustomFormat = " ";
+            //Maximum date it today
+            dtpPubYear.MaxDate = DateTime.Now;
 
         }
 
@@ -135,15 +139,6 @@ namespace LibraryManagementSystem
 
             dgvStudent.ClientSize = new Size(width + 2, dgvStudent.Height);
             dgvStudent.BackgroundColor = System.Drawing.SystemColors.Control;
-        }
-
-        //Doesn't let the user enter in numbers
-        private void txtID_TextChanged(object sender, EventArgs e)
-        {
-            if (System.Text.RegularExpressions.Regex.IsMatch(txtID.Text, "[^0-9]"))
-            {
-                txtID.Text = txtID.Text.Remove(txtID.Text.Length - 1);
-            }
         }
 
         //When the user wants to clear all of the filter options
@@ -304,6 +299,44 @@ namespace LibraryManagementSystem
                 cmbCategory.Text = "";
             }
 
+        }
+
+
+        /// <summary>
+        /// When the user clicks on a field to edit, it enables the edit button if the user is an Admin
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvStudent_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (CurrentUser.IsAdmin == "True")
+            {
+                lblEditStudent.Enabled = true;
+            }
+
+            //MessageBox.Show(dgvStudent.CurrentRow.Cells[0].Value.ToString());
+        }
+
+        /// <summary>
+        /// When the user clicks on a field to edit, it enables the edit button if the user is an Admin
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgvBook_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (CurrentUser.IsAdmin == "True")
+            {
+                lblEditBook.Enabled = true;
+            }
+
+            //MessageBox.Show(dgvStudent.CurrentRow.Cells[0].Value.ToString());
+        }
+
+        private void btnSignUp_Click(object sender, EventArgs e)
+        {
+            frmNewStudent newStudent = new frmNewStudent();
+            newStudent.Show();
+            this.Hide();
         }
     }
 }

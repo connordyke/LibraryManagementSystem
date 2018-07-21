@@ -12,11 +12,97 @@ namespace LibraryManagementSystem
     {
         //SQL Connection object
         SqlConnection conn = new SqlConnection();
-        //To keep track of current user;
-        public static User currentUser;
 
         //String for connecting to the database
-        String strConnect = "Server =.\\SQLEXPRESS; Database = Library; Trusted_Connection = True; ";
+        String strConnect = "Server =.\\SQLEXPRESS; Database = Library; Trusted_Connection = True;";
+
+        /// <summary>
+        /// Checks the connection to the database when the application is first loaded
+        /// </summary>
+        /// <returns> True or false based on whether the connection succeeded or not</returns>
+        public Boolean CheckConnection()
+        {
+
+            //Using the connection
+            using (SqlConnection connection = new SqlConnection(strConnect))
+            {
+                //Try to connect to the database server
+                try
+                {
+                    //If the connection opens return true;
+                    connection.Open();
+                    return true;
+                }catch (Exception e)
+                {
+                    //If it fails, return false
+                    return false;
+                }
+
+            }
+
+        }
+
+        /// <summary>
+        /// Gets a single row from the database to get the last student ID in database, then adds 1 onto that to create a new student ID
+        /// </summary>
+        /// <returns>The new student ID as a string (because its going into a text box)</returns>
+        public string getNewID()
+        {
+            //String to store new student ID
+            int newStudentID = 0;
+
+            //Connection path for databse
+            conn.ConnectionString = strConnect;
+
+            //Query to get the ID's listed in the database
+            SqlCommand query = new SqlCommand("Select Top(1) Student_id from Student_Details ORDER BY Student_id DESC;", conn);
+            //Open database connection
+            conn.Open();
+
+            //Query database to see if user exists, if they do, get password
+            SqlDataReader reader = query.ExecuteReader();
+
+            while(reader.Read())
+            {
+                //Store the 
+                newStudentID = Int32.Parse(reader[0].ToString());
+            }
+
+            conn.Close();
+
+            newStudentID++;
+
+            return newStudentID.ToString();
+
+        }
+
+        public void insertNewStudent(Student newStudent)
+        {
+
+            //Connection path for databse
+            conn.ConnectionString = strConnect;
+
+            //Query to get the ID's listed in the database
+            SqlCommand query = new SqlCommand("INSERT INTO Student_Details (Student_id, Student_Name, Gender, Date_Of_Birth, Department, contact_Number)" +
+                                                "VALUES(@id, @name, @gender, @dob, @dept, @contact);", 
+                                                        conn);
+            //Open database connection
+            conn.Open();
+
+            //Add the values to the parameters for the insert statement
+            query.Parameters.AddWithValue("@id", newStudent.Student_id);
+            query.Parameters.AddWithValue("@name", newStudent.Student_name);
+            query.Parameters.AddWithValue("@gender", newStudent.Gender);
+            query.Parameters.AddWithValue("@dob", newStudent.Dob);
+            query.Parameters.AddWithValue("@dept", newStudent.Dept);
+            query.Parameters.AddWithValue("@contact", newStudent.ContactNum);
+
+            query.ExecuteNonQuery();
+
+            conn.Close();
+
+        }
+
 
         /// <summary>
         /// Method to check whether a user provided the correct password or not
@@ -51,7 +137,11 @@ namespace LibraryManagementSystem
                 if (passwordDB == password)
                 {
                     //Collect the information about the user that logged in
-                    currentUser = new User(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), reader[4].ToString());
+                    CurrentUser.Id = Int32.Parse(reader[0].ToString());
+                    CurrentUser.Name = reader[1].ToString();
+                    CurrentUser.Username = reader[2].ToString();
+                    CurrentUser.IsAdmin = reader[4].ToString();
+                    CurrentUser.Designation = reader[5].ToString();
                     loginSuccessful = true;
                 }
 
@@ -338,6 +428,16 @@ namespace LibraryManagementSystem
 
         }
 
+        /*
+        public int NewStudentID()
+        {
+
+
+
+            return 1;
+        }
+        */
+
 
         /// <summary>
         /// Adds a WHERE clause onto the SQL query for the dynamic query to search for students
@@ -354,6 +454,8 @@ namespace LibraryManagementSystem
             }
             return string.Format("{0} {1} {2}", clause, appender, condition);
         }
+
+
 
     }
 }
