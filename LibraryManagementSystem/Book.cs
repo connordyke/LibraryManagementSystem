@@ -36,6 +36,11 @@ namespace LibraryManagementSystem
             this.FloorNum = floorNum;
         }
 
+        public Book(int isbn)
+        {
+            this.Isbn = isbn;
+        }
+
         public int Isbn { get => isbn; set => isbn = value; }
         public string BookTitle { get => bookTitle; set => bookTitle = value; }
         public string Language { get => language; set => language = value; }

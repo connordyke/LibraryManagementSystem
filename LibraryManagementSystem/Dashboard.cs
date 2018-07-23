@@ -47,9 +47,6 @@ namespace LibraryManagementSystem
             //Maximum date it today
             dtpDOB.MaxDate = DateTime.Now;
 
-            //Perform a search with no filter, just to show all students
-            btnSearchStudent.PerformClick();
-
             //List of strings (departments in database)
             List<String> languagesList = new List<String>();
             //List of strings (genders in database)
@@ -438,6 +435,11 @@ namespace LibraryManagementSystem
             }
         }
 
+        /// <summary>
+        /// Sends the user to the new form to add a new book
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddBook_Click(object sender, EventArgs e)
         {
             frmBook newBook = new frmBook();
@@ -445,5 +447,23 @@ namespace LibraryManagementSystem
             this.Hide();
         }
 
+        /// <summary>
+        /// Sends the user to the new form to select a book to issue
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnIssue_Click(object sender, EventArgs e)
+        {
+            frmIssueReturn issueBook = new frmIssueReturn("Issue");
+            issueBook.Show();
+            this.Hide();
+        }
+
+        private void btnReturn_Click(object sender, EventArgs e)
+        {
+            frmIssueReturn returnBook = new frmIssueReturn("Return");
+            returnBook.Show();
+            this.Hide();
+        }
     }
 }

@@ -28,13 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabDashboard = new System.Windows.Forms.TabControl();
             this.tabDash = new System.Windows.Forms.TabPage();
-            this.btnSignUp = new System.Windows.Forms.Button();
             this.lblName = new System.Windows.Forms.Label();
             this.tabStudents = new System.Windows.Forms.TabPage();
             this.dtpDOB = new System.Windows.Forms.DateTimePicker();
@@ -53,6 +48,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabBooks = new System.Windows.Forms.TabPage();
+            this.txtISBN = new System.Windows.Forms.MaskedTextBox();
             this.lblEditBook = new System.Windows.Forms.LinkLabel();
             this.dtpPubYear = new System.Windows.Forms.DateTimePicker();
             this.lblNumBooks = new System.Windows.Forms.Label();
@@ -70,14 +66,17 @@
             this.label12 = new System.Windows.Forms.Label();
             this.dgvBooks = new System.Windows.Forms.DataGridView();
             this.tabAdmin = new System.Windows.Forms.TabPage();
-            this.txtISBN = new System.Windows.Forms.MaskedTextBox();
+            this.btnIssue = new System.Windows.Forms.Button();
             this.btnAddBook = new System.Windows.Forms.Button();
+            this.btnSignUp = new System.Windows.Forms.Button();
+            this.btnReturn = new System.Windows.Forms.Button();
             this.tabDashboard.SuspendLayout();
             this.tabDash.SuspendLayout();
             this.tabStudents.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStudent)).BeginInit();
             this.tabBooks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).BeginInit();
+            this.tabAdmin.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabDashboard
@@ -96,8 +95,8 @@
             // 
             // tabDash
             // 
-            this.tabDash.Controls.Add(this.btnAddBook);
-            this.tabDash.Controls.Add(this.btnSignUp);
+            this.tabDash.Controls.Add(this.btnReturn);
+            this.tabDash.Controls.Add(this.btnIssue);
             this.tabDash.Controls.Add(this.lblName);
             this.tabDash.Location = new System.Drawing.Point(4, 33);
             this.tabDash.Name = "tabDash";
@@ -105,16 +104,6 @@
             this.tabDash.TabIndex = 2;
             this.tabDash.Text = "Dashboard";
             this.tabDash.UseVisualStyleBackColor = true;
-            // 
-            // btnSignUp
-            // 
-            this.btnSignUp.Location = new System.Drawing.Point(45, 45);
-            this.btnSignUp.Name = "btnSignUp";
-            this.btnSignUp.Size = new System.Drawing.Size(217, 58);
-            this.btnSignUp.TabIndex = 2;
-            this.btnSignUp.Text = "Sign Up New Student";
-            this.btnSignUp.UseVisualStyleBackColor = true;
-            this.btnSignUp.Click += new System.EventHandler(this.btnSignUp_Click);
             // 
             // lblName
             // 
@@ -200,23 +189,7 @@
             this.dgvStudent.AllowUserToOrderColumns = true;
             this.dgvStudent.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvStudent.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvStudent.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvStudent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvStudent.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvStudent.Location = new System.Drawing.Point(108, 159);
             this.dgvStudent.Name = "dgvStudent";
             this.dgvStudent.ReadOnly = true;
@@ -350,6 +323,16 @@
             this.tabBooks.TabIndex = 1;
             this.tabBooks.Text = "Search Books";
             this.tabBooks.UseVisualStyleBackColor = true;
+            // 
+            // txtISBN
+            // 
+            this.txtISBN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtISBN.Location = new System.Drawing.Point(24, 35);
+            this.txtISBN.Mask = "000000";
+            this.txtISBN.Name = "txtISBN";
+            this.txtISBN.Size = new System.Drawing.Size(139, 26);
+            this.txtISBN.TabIndex = 52;
+            this.txtISBN.ValidatingType = typeof(int);
             // 
             // lblEditBook
             // 
@@ -515,23 +498,7 @@
             this.dgvBooks.AllowUserToResizeRows = false;
             this.dgvBooks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvBooks.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvBooks.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvBooks.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvBooks.Location = new System.Drawing.Point(0, 152);
             this.dgvBooks.Name = "dgvBooks";
             this.dgvBooks.ReadOnly = true;
@@ -543,6 +510,8 @@
             // 
             // tabAdmin
             // 
+            this.tabAdmin.Controls.Add(this.btnAddBook);
+            this.tabAdmin.Controls.Add(this.btnSignUp);
             this.tabAdmin.Location = new System.Drawing.Point(4, 33);
             this.tabAdmin.Name = "tabAdmin";
             this.tabAdmin.Size = new System.Drawing.Size(1081, 491);
@@ -550,25 +519,43 @@
             this.tabAdmin.Text = "Admin";
             this.tabAdmin.UseVisualStyleBackColor = true;
             // 
-            // txtISBN
+            // btnIssue
             // 
-            this.txtISBN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtISBN.Location = new System.Drawing.Point(24, 35);
-            this.txtISBN.Mask = "000000";
-            this.txtISBN.Name = "txtISBN";
-            this.txtISBN.Size = new System.Drawing.Size(139, 26);
-            this.txtISBN.TabIndex = 52;
-            this.txtISBN.ValidatingType = typeof(int);
+            this.btnIssue.Location = new System.Drawing.Point(66, 41);
+            this.btnIssue.Name = "btnIssue";
+            this.btnIssue.Size = new System.Drawing.Size(217, 58);
+            this.btnIssue.TabIndex = 4;
+            this.btnIssue.Text = "Issue Book";
+            this.btnIssue.UseVisualStyleBackColor = true;
+            this.btnIssue.Click += new System.EventHandler(this.btnIssue_Click);
             // 
             // btnAddBook
             // 
-            this.btnAddBook.Location = new System.Drawing.Point(45, 119);
+            this.btnAddBook.Location = new System.Drawing.Point(30, 100);
             this.btnAddBook.Name = "btnAddBook";
             this.btnAddBook.Size = new System.Drawing.Size(217, 58);
-            this.btnAddBook.TabIndex = 3;
+            this.btnAddBook.TabIndex = 5;
             this.btnAddBook.Text = "Add New Book";
             this.btnAddBook.UseVisualStyleBackColor = true;
-            this.btnAddBook.Click += new System.EventHandler(this.btnAddBook_Click);
+            // 
+            // btnSignUp
+            // 
+            this.btnSignUp.Location = new System.Drawing.Point(30, 26);
+            this.btnSignUp.Name = "btnSignUp";
+            this.btnSignUp.Size = new System.Drawing.Size(217, 58);
+            this.btnSignUp.TabIndex = 4;
+            this.btnSignUp.Text = "Sign Up New Student";
+            this.btnSignUp.UseVisualStyleBackColor = true;
+            // 
+            // btnReturn
+            // 
+            this.btnReturn.Location = new System.Drawing.Point(66, 137);
+            this.btnReturn.Name = "btnReturn";
+            this.btnReturn.Size = new System.Drawing.Size(217, 58);
+            this.btnReturn.TabIndex = 5;
+            this.btnReturn.Text = "Return Book";
+            this.btnReturn.UseVisualStyleBackColor = true;
+            this.btnReturn.Click += new System.EventHandler(this.btnReturn_Click);
             // 
             // frmDashboard
             // 
@@ -592,6 +579,7 @@
             this.tabBooks.ResumeLayout(false);
             this.tabBooks.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBooks)).EndInit();
+            this.tabAdmin.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -632,12 +620,14 @@
         private System.Windows.Forms.DataGridView dgvBooks;
         private System.Windows.Forms.LinkLabel lblEditBook;
         private System.Windows.Forms.LinkLabel lblEditStudent;
-        private System.Windows.Forms.Button btnSignUp;
         private System.Windows.Forms.MaskedTextBox txtID;
         private System.Windows.Forms.DateTimePicker dtpDOB;
         private System.Windows.Forms.TabPage tabAdmin;
         private System.Windows.Forms.ToolTip tipEdit;
         private System.Windows.Forms.MaskedTextBox txtISBN;
+        private System.Windows.Forms.Button btnIssue;
+        private System.Windows.Forms.Button btnReturn;
         private System.Windows.Forms.Button btnAddBook;
+        private System.Windows.Forms.Button btnSignUp;
     }
 }

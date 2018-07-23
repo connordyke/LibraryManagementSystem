@@ -224,6 +224,7 @@ namespace LibraryManagementSystem
             SqlCommand queryCopies = new SqlCommand("SELECT No_Copies_Current FROM Book_Details WHERE ISBN_Code = @isbn;",
                                                         conn);
 
+            //Add the variable to the query
             queryCopies.Parameters.AddWithValue("@isbn", newBook.Isbn);
 
             //Open database connection
@@ -294,9 +295,173 @@ namespace LibraryManagementSystem
 
             //Insert book or update book
             queryBook.ExecuteNonQuery();
-            Console.WriteLine(queryBook.CommandText);
+            //Console.WriteLine(queryBook.CommandText);
 
             //Close connection
+            conn.Close();
+
+        }
+
+        public void returnBook(int isbn, int studentID, int borrowerNum, String actualDate)
+        {
+            //Connection path for databse
+            conn.ConnectionString = strConnect;
+
+            int currentAmount = 0;
+            int actualAmount = 0;
+            String outOfStock = "";
+
+            //Query to get see how many books are currently in stock for this current book
+            SqlCommand selectQuery = new SqlCommand("SELECT No_Copies_Current, No_Copies_Actual, OutOfStock FROM Book_Details WHERE ISBN_Code = @isbn", conn);
+
+            //Open the connection
+            conn.Open();
+
+            //Add the variable to the query
+            selectQuery.Parameters.AddWithValue("@isbn", isbn);
+            //Query database to see if user exists, if they do, get password
+            SqlDataReader readerNumCopies = selectQuery.ExecuteReader();
+
+            //Gets the number of copies and current number of copies
+            while (readerNumCopies.Read())
+            {
+                currentAmount = Int32.Parse(readerNumCopies[0].ToString());
+                actualAmount = Int32.Parse(readerNumCopies[1].ToString());
+                outOfStock = readerNumCopies[2].ToString();
+            }
+
+            //Close the connection
+            conn.Close();
+
+            SqlCommand updateAmount = new SqlCommand("UPDATE Book_Details " +
+                            "SET No_Copies_Current = @copies, OutOfStock = @outOfStock" +
+                            " WHERE ISBN_Code = @isbn", conn);
+
+            //Open the connection
+            conn.Open();
+
+            //If the book was out of stock, it is now in stock
+            if (currentAmount == 0 || currentAmount < actualAmount)
+            {
+                outOfStock = "False";
+                currentAmount++;
+            }
+
+
+
+            //Add the values to the parameters for the insert statement
+            updateAmount.Parameters.AddWithValue("@isbn", isbn);
+            updateAmount.Parameters.AddWithValue("@outOfStock", outOfStock); //Add one to the current amount
+            updateAmount.Parameters.AddWithValue("@copies", currentAmount); //Add one to the current amount
+
+            //Update the amount
+            updateAmount.ExecuteNonQuery();
+
+            //Close the connection
+            conn.Close();
+
+            SqlCommand updateDate = new SqlCommand("UPDATE Borrower_Details " +
+                "SET Actual_Return_Date = @actualReturn" +
+                " WHERE BorrowNum = @borrowerNum", conn);
+
+            //Open the connection
+            conn.Open();
+
+            //Add the values to the parameters for the insert statement
+            updateDate.Parameters.AddWithValue("@actualReturn", actualDate);
+            updateDate.Parameters.AddWithValue("@borrowerNum", borrowerNum); //Add one to the current amount
+
+            //Update the amount
+            updateDate.ExecuteNonQuery();
+
+            //Close the connection
+            conn.Close();
+
+        }
+
+            public void insertNewBorrow(int studentID, int isbn, String issueDate, String returnDate, int issuedBy)
+        {
+            //Variable to see how many books are currently in stock
+            int currentAmount = 0;
+
+            //Connection path for databse
+            conn.ConnectionString = strConnect;
+
+            //Query to insert the new borrow row
+            SqlCommand insertQuery = new SqlCommand("INSERT INTO Borrower_Details (Borrower_Id, Book_Id, Borrowed_From, Borrowed_To, Issued_By)" +
+                                                    "VALUES(@borrowerId, @bookId, @issueDate, @returnDate, @issuedBy);",
+                                                            conn);
+
+            //Add the values to the parameters for the insert statement
+            insertQuery.Parameters.AddWithValue("@borrowerId", studentID);
+            insertQuery.Parameters.AddWithValue("@bookId", isbn);
+            insertQuery.Parameters.AddWithValue("@issueDate", issueDate);
+            insertQuery.Parameters.AddWithValue("@returnDate", returnDate);
+            insertQuery.Parameters.AddWithValue("@issuedBy", issuedBy);
+
+            //Open database connection
+            conn.Open();
+
+            //Inserts the new row
+            insertQuery.ExecuteNonQuery();
+
+            //Close the connection
+            conn.Close();
+
+
+
+
+            //Query to get see how many books are currently in stock for this current book
+            SqlCommand selectQuery = new SqlCommand("SELECT No_Copies_Current FROM Book_Details WHERE ISBN_Code = @isbn", conn);
+
+            //Open the connection
+            conn.Open();
+
+            //Add the variable to the query
+            selectQuery.Parameters.AddWithValue("@isbn", isbn);
+            //Query database to see if user exists, if they do, get password
+            SqlDataReader readerNumCopies = selectQuery.ExecuteReader();
+
+            //Gets the number of copies and current number of copies
+            while (readerNumCopies.Read())
+            {
+                currentAmount = Int32.Parse(readerNumCopies[0].ToString());
+            }
+
+            //Close the connection
+            conn.Close();
+
+
+            //Query to get the ID's listed in the database
+            SqlCommand updateQuery = new SqlCommand("UPDATE Book_Details " +
+                                                        "SET No_Copies_Current = @currcopies, OutOfStock = @outOfStock" +
+                                                        " WHERE ISBN_Code = @isbn",
+                                                            conn);
+
+            //Open the connection
+            conn.Open();
+
+            //If the current amount of books is 1, its on the last book, set it to out of stock and subtract one
+            if (currentAmount == 1)
+            {
+                updateQuery.Parameters.AddWithValue("@outOfStock", true);
+                currentAmount--;
+
+            }
+            else //Else, its in stock
+            {
+                updateQuery.Parameters.AddWithValue("@outOfStock", false);
+                //Subtract one from the current amount because the user just issued a book
+                currentAmount--;
+            }
+            
+            updateQuery.Parameters.AddWithValue("@currCopies", currentAmount);
+            updateQuery.Parameters.AddWithValue("@isbn", isbn);
+
+            //Execute the update statement
+            updateQuery.ExecuteNonQuery();
+
+            //Close the connection
             conn.Close();
 
         }
@@ -560,6 +725,45 @@ namespace LibraryManagementSystem
             return shelves;
         }
 
+        /// <summary>
+        /// Gets a list of the return date for the specified book
+        /// </summary>
+        /// <returns>List of departments in the database</returns>
+        public List<String> getReturnDateAndBorrowNum(int isbn, int studentID)
+        {
+
+            List<String> returnInfo = new List<String>();
+
+            //Connection path for databse
+            conn.ConnectionString = strConnect;
+
+            //Query to get all departments in the system
+            SqlCommand query = new SqlCommand("Select Borrowed_TO, BorrowNum from Borrower_Details WHERE Borrower_Id = @borrowerID AND Book_Id = @isbn AND Actual_Return_Date IS NULL;", conn);
+            //Open database connection
+            conn.Open();
+
+            //Add the values to the parameters for the insert statement
+            query.Parameters.AddWithValue("@borrowerID", studentID);
+            query.Parameters.AddWithValue("@isbn", isbn);
+
+            //Query database to get departments
+            SqlDataReader reader = query.ExecuteReader();
+
+            while (reader.Read())
+            {
+                returnInfo.Add(reader[0].ToString());
+                returnInfo.Add(reader[1].ToString());
+            }
+
+
+
+            //close DB connection
+            conn.Close();
+
+            //Return the list of departments
+            return returnInfo;
+        }
+
 
 
         public List<Student> StudentSearch(Student student)
@@ -699,6 +903,74 @@ namespace LibraryManagementSystem
             return books;
 
 
+        }
+
+        /// <summary>
+        /// Gets a list of all books that aren't out of stock
+        /// </summary>
+        /// <returns>List of departments in the database</returns>
+        public List<Book> getInStockOutStockBooks(String outOfStock)
+        {
+            //Array to keep list of departments
+            List<Book> books = new List<Book>();
+
+            //Connection path for databse
+            conn.ConnectionString = strConnect;
+
+            string query = "";
+
+            if (outOfStock == "True")
+            {
+                //Query to get all the in stock books in the database
+                query = "SELECT ISBN_Code, Book_Title, Language, Binding_Name, No_Copies_Actual, No_Copies_Current, Category_Name, Publication_year, Shelf_no, Floor_no FROM Book_Details" +
+                    " JOIN Category_Details ON Book_Details.Category_ID = Category_Details.Category_ID" +
+                    " JOIN Binding_Details ON Book_Details.Binding_ID = Binding_Details.Binding_ID " +
+                    " JOIN Shelf_Details on Book_Details.Shelf_id = Shelf_Details.Shelf_id " +
+                    " WHERE OutOfStock = @outOfStock OR No_Copies_Current < No_Copies_Actual";
+            }
+            else
+            {
+                //Query to get all the in stock books in the database
+                query = "SELECT ISBN_Code, Book_Title, Language, Binding_Name, No_Copies_Actual, No_Copies_Current, Category_Name, Publication_year, Shelf_no, Floor_no FROM Book_Details" +
+                    " JOIN Category_Details ON Book_Details.Category_ID = Category_Details.Category_ID" +
+                    " JOIN Binding_Details ON Book_Details.Binding_ID = Binding_Details.Binding_ID " +
+                    " JOIN Shelf_Details on Book_Details.Shelf_id = Shelf_Details.Shelf_id " +
+                    " WHERE OutOfStock = @outOfStock";
+            }
+
+            SqlCommand command = new SqlCommand(query, conn);
+
+            if (outOfStock == "False")
+            {
+                //Add the values to the parameters for the insert statement
+                command.Parameters.AddWithValue("@outOfStock", "False");
+            }
+            else
+            {
+                //Add the values to the parameters for the insert statement
+                command.Parameters.AddWithValue("@outOfStock", "True");
+            }
+
+            //Open database connection
+            conn.Open();
+
+            //Query database to get departments
+            SqlDataReader reader = command.ExecuteReader();
+
+            //Go through the retrieved rows
+            while (reader.Read())
+            {
+                //Create the current student by getting their information from the database
+                Book currentBook = new Book(Int32.Parse(reader[0].ToString()), reader[1].ToString(), reader[2].ToString(), reader[3].ToString(), Int32.Parse(reader[4].ToString()), Int32.Parse(reader[5].ToString()), reader[6].ToString(), reader[7].ToString(), "", Int32.Parse(reader[8].ToString()), Int32.Parse(reader[9].ToString()));
+                //Put the current student into the list
+                books.Add(currentBook);
+            }
+
+            //close DB connection
+            conn.Close();
+
+            //Return the list of departments
+            return books;
         }
 
 
