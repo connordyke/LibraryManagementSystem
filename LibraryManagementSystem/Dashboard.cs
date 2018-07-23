@@ -22,6 +22,7 @@ namespace LibraryManagementSystem
 
         private void Dashboard_Load(object sender, EventArgs e)
         {
+
             //Get the name from the logged in user and display it in the corner
             lblName.Text = "Welcome, " + CurrentUser.Name + "!";
 
@@ -74,6 +75,11 @@ namespace LibraryManagementSystem
             //Maximum date it today
             dtpPubYear.MaxDate = DateTime.Now;
 
+            if (CurrentUser.IsAdmin == "False")
+            {
+                tabDashboard.TabPages.Remove(tabAdmin);
+            }
+
         }
 
 
@@ -91,8 +97,15 @@ namespace LibraryManagementSystem
             //If ID text box has something in it, replace 0 with the ID input by user
             if (txtID.Text != "")
             {
-                id = Int32.Parse(txtID.Text);
-
+                if (txtID.MaskCompleted)
+                {
+                    id = Int32.Parse(txtID.Text);
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid Student ID", "Invalid Student ID", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                
             }
 
             //If the date time picker is not empty, put the value in the variable
@@ -119,7 +132,14 @@ namespace LibraryManagementSystem
             dgvStudent.DataSource = studentSearchResult;
 
             //Displays number of returned records to the user
-            lblNumRecords.Text = studentSearchResult.Count + " Students match your filter.";
+            if (studentSearchResult.Count == 1)
+            {
+                lblNumRecords.Text = studentSearchResult.Count + " Student matches your filter.";
+            }
+            else
+            {
+                lblNumRecords.Text = studentSearchResult.Count + " Students match your filter.";
+            }
 
             //Column headers
             dgvStudent.Columns[0].HeaderText = "Student ID";
@@ -156,6 +176,9 @@ namespace LibraryManagementSystem
 
             //Give focus to ID text box (first text box)
             txtID.Focus();
+
+            //Disable the edit link label
+            lblEditStudent.Enabled = false;
         }
 
         //When the user selects a date, display the correct format
@@ -180,7 +203,14 @@ namespace LibraryManagementSystem
             //If ISBN text box has something in it, replace 0 with the ID input by user
             if (txtISBN.Text != "")
             {
-                ISBN = Int32.Parse(txtISBN.Text);
+                if (txtISBN.MaskCompleted)
+                {
+                    ISBN = Int32.Parse(txtID.Text);
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid ISBN Code", "Invalid ISBN Code", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
 
             }
 
@@ -206,6 +236,12 @@ namespace LibraryManagementSystem
                 outOfStock = "False";
             }
 
+            //If there are no students to edit, disable the edit link
+            if (bookSearchResult.Count == 0)
+            {
+                lblEditBook.Enabled = false;
+            }
+
 
             //Create a new book with properties set
             Book searchBook = new Book(ISBN, title, lang, "", 0, 0, category, pubYear, outOfStock, 0, 0);
@@ -219,7 +255,14 @@ namespace LibraryManagementSystem
             dgvBooks.DataSource = bookSearchResult;
 
             //Displays number of returned records to the user
-            lblNumBooks.Text = bookSearchResult.Count + " Books match your filter.";
+            if (bookSearchResult.Count == 1)
+            {
+                lblNumBooks.Text = bookSearchResult.Count + " Book matches your filter.";
+            }
+            else
+            {
+                lblNumBooks.Text = bookSearchResult.Count + " Books match your filter.";
+            }
 
             //Remove the out of stock column
             dgvBooks.Columns.RemoveAt(8);
@@ -233,8 +276,8 @@ namespace LibraryManagementSystem
             dgvBooks.Columns[5].HeaderText = "Current\nStock";
             dgvBooks.Columns[6].HeaderText = "Category";
             dgvBooks.Columns[7].HeaderText = "Publication\nYear";
-            dgvBooks.Columns[8].HeaderText = "Shelf\nNumber";
-            dgvBooks.Columns[9].HeaderText = "Floor\nNumber";
+            dgvBooks.Columns[8].HeaderText = "Shelf";
+            dgvBooks.Columns[9].HeaderText = "Floor";
 
             //Dynamically size the data grid view each time the user searches
             int width = 0;
@@ -260,18 +303,22 @@ namespace LibraryManagementSystem
         //When the user wants to clear the filters for the book search
         private void btnClearBook_Click(object sender, EventArgs e)
         {
-            //Clear all text boxes
+            //Clear all text boxes, and reset combo boxes
             txtISBN.Text = "";
             txtTitle.Text = "";
-            cmbLang.Text = "";
+            cmbLang.SelectedIndex = -1;
             dtpPubYear.Text = "";
-            cmbCategory.Text = "";
-            cmbOutOfStock.Text = "";
+            cmbCategory.SelectedIndex = -1;
+            cmbOutOfStock.SelectedIndex = -1;
 
+            //Initial value of the date time picker is empty
             dtpPubYear.CustomFormat = " ";
 
             //Give focus to ISBN text box (first text box)
             txtISBN.Focus();
+
+            //Disable the edit link label
+            lblEditBook.Enabled = false;
         }
         
         //When the user changes the value of the date time picker
@@ -322,7 +369,7 @@ namespace LibraryManagementSystem
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dgvBook_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvBooks_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (CurrentUser.IsAdmin == "True")
             {
@@ -334,9 +381,69 @@ namespace LibraryManagementSystem
 
         private void btnSignUp_Click(object sender, EventArgs e)
         {
-            frmNewStudent newStudent = new frmNewStudent();
+            frmStudent newStudent = new frmStudent();
             newStudent.Show();
             this.Hide();
         }
+
+        private void lblEditStudent_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            String edit = "Edit";
+
+
+             DialogResult dialogResult = MessageBox.Show("Would you like to edit the student information for the student " + dgvStudent.CurrentRow.Cells[1].Value.ToString() + "?", "Edit Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            //if they choose yes, refresh the form
+            if (dialogResult == DialogResult.Yes)
+            {
+                Student editStudent = new Student(Int32.Parse(dgvStudent.CurrentRow.Cells[0].Value.ToString()), dgvStudent.CurrentRow.Cells[1].Value.ToString(), dgvStudent.CurrentRow.Cells[2].Value.ToString(),
+                    dgvStudent.CurrentRow.Cells[3].Value.ToString(), dgvStudent.CurrentRow.Cells[4].Value.ToString(), dgvStudent.CurrentRow.Cells[5].Value.ToString());
+
+                this.Hide();
+                frmStudent frmStudent = new frmStudent(edit, editStudent);
+                frmStudent.Show();
+            }
+
+            //MessageBox.Show(dgvStudent.CurrentRow.Cells[0].Value.ToString());
+        }
+
+        private void frmDashboard_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                Application.Exit();
+            }
+
+            
+        }
+
+        private void lblEditBook_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            String edit = "Edit";
+
+
+            DialogResult dialogResult = MessageBox.Show("Would you like to edit the book information for the book " + dgvBooks.CurrentRow.Cells[1].Value.ToString() + "?", "Edit Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            //if they choose yes, refresh the form
+            if (dialogResult == DialogResult.Yes)
+            {
+                Book editBook = new Book(Int32.Parse(dgvBooks.CurrentRow.Cells[0].Value.ToString()), dgvBooks.CurrentRow.Cells[1].Value.ToString(), dgvBooks.CurrentRow.Cells[2].Value.ToString(),
+                    dgvBooks.CurrentRow.Cells[3].Value.ToString(), Int32.Parse(dgvBooks.CurrentRow.Cells[4].Value.ToString()), Int32.Parse(dgvBooks.CurrentRow.Cells[5].Value.ToString()), 
+                    dgvBooks.CurrentRow.Cells[6].Value.ToString(), dgvBooks.CurrentRow.Cells[7].Value.ToString(), "", 
+                    Int32.Parse(dgvBooks.CurrentRow.Cells[8].Value.ToString()), Int32.Parse(dgvBooks.CurrentRow.Cells[9].Value.ToString()));
+
+                this.Hide();
+                frmBook frmBook = new frmBook(edit, editBook);
+                frmBook.Show();
+            }
+        }
+
+        private void btnAddBook_Click(object sender, EventArgs e)
+        {
+            frmBook newBook = new frmBook();
+            newBook.Show();
+            this.Hide();
+        }
+
     }
 }

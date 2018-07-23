@@ -28,11 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabDashboard = new System.Windows.Forms.TabControl();
             this.tabDash = new System.Windows.Forms.TabPage();
             this.btnSignUp = new System.Windows.Forms.Button();
             this.lblName = new System.Windows.Forms.Label();
             this.tabStudents = new System.Windows.Forms.TabPage();
+            this.dtpDOB = new System.Windows.Forms.DateTimePicker();
+            this.txtID = new System.Windows.Forms.MaskedTextBox();
             this.lblEditStudent = new System.Windows.Forms.LinkLabel();
             this.lblNumRecords = new System.Windows.Forms.Label();
             this.dgvStudent = new System.Windows.Forms.DataGridView();
@@ -58,14 +64,14 @@
             this.cmbLang = new System.Windows.Forms.ComboBox();
             this.btnSearchBook = new System.Windows.Forms.Button();
             this.txtTitle = new System.Windows.Forms.TextBox();
-            this.txtISBN = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.dgvBooks = new System.Windows.Forms.DataGridView();
-            this.txtID = new System.Windows.Forms.MaskedTextBox();
-            this.dtpDOB = new System.Windows.Forms.DateTimePicker();
+            this.tabAdmin = new System.Windows.Forms.TabPage();
+            this.txtISBN = new System.Windows.Forms.MaskedTextBox();
+            this.btnAddBook = new System.Windows.Forms.Button();
             this.tabDashboard.SuspendLayout();
             this.tabDash.SuspendLayout();
             this.tabStudents.SuspendLayout();
@@ -79,6 +85,7 @@
             this.tabDashboard.Controls.Add(this.tabDash);
             this.tabDashboard.Controls.Add(this.tabStudents);
             this.tabDashboard.Controls.Add(this.tabBooks);
+            this.tabDashboard.Controls.Add(this.tabAdmin);
             this.tabDashboard.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabDashboard.Location = new System.Drawing.Point(12, 12);
             this.tabDashboard.Name = "tabDashboard";
@@ -89,6 +96,7 @@
             // 
             // tabDash
             // 
+            this.tabDash.Controls.Add(this.btnAddBook);
             this.tabDash.Controls.Add(this.btnSignUp);
             this.tabDash.Controls.Add(this.lblName);
             this.tabDash.Location = new System.Drawing.Point(4, 33);
@@ -113,7 +121,7 @@
             this.lblName.AutoSize = true;
             this.lblName.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.lblName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblName.Location = new System.Drawing.Point(871, 0);
+            this.lblName.Location = new System.Drawing.Point(794, 0);
             this.lblName.Name = "lblName";
             this.lblName.Size = new System.Drawing.Size(2, 22);
             this.lblName.TabIndex = 1;
@@ -143,6 +151,26 @@
             this.tabStudents.Text = "Search Students";
             this.tabStudents.UseVisualStyleBackColor = true;
             // 
+            // dtpDOB
+            // 
+            this.dtpDOB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtpDOB.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpDOB.Location = new System.Drawing.Point(567, 33);
+            this.dtpDOB.Name = "dtpDOB";
+            this.dtpDOB.Size = new System.Drawing.Size(200, 26);
+            this.dtpDOB.TabIndex = 34;
+            this.dtpDOB.ValueChanged += new System.EventHandler(this.dtpDOB_ValueChanged);
+            // 
+            // txtID
+            // 
+            this.txtID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtID.Location = new System.Drawing.Point(24, 35);
+            this.txtID.Mask = "000000";
+            this.txtID.Name = "txtID";
+            this.txtID.Size = new System.Drawing.Size(164, 26);
+            this.txtID.TabIndex = 1;
+            this.txtID.ValidatingType = typeof(int);
+            // 
             // lblEditStudent
             // 
             this.lblEditStudent.AutoSize = true;
@@ -154,6 +182,7 @@
             this.lblEditStudent.TabIndex = 33;
             this.lblEditStudent.TabStop = true;
             this.lblEditStudent.Text = "Edit Information";
+            this.lblEditStudent.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblEditStudent_LinkClicked);
             // 
             // lblNumRecords
             // 
@@ -166,11 +195,31 @@
             // 
             // dgvStudent
             // 
+            this.dgvStudent.AllowUserToAddRows = false;
+            this.dgvStudent.AllowUserToDeleteRows = false;
+            this.dgvStudent.AllowUserToOrderColumns = true;
             this.dgvStudent.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgvStudent.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvStudent.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvStudent.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvStudent.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvStudent.Location = new System.Drawing.Point(108, 159);
             this.dgvStudent.Name = "dgvStudent";
+            this.dgvStudent.ReadOnly = true;
             this.dgvStudent.RowHeadersVisible = false;
             this.dgvStudent.Size = new System.Drawing.Size(847, 303);
             this.dgvStudent.TabIndex = 31;
@@ -278,6 +327,7 @@
             // 
             // tabBooks
             // 
+            this.tabBooks.Controls.Add(this.txtISBN);
             this.tabBooks.Controls.Add(this.lblEditBook);
             this.tabBooks.Controls.Add(this.dtpPubYear);
             this.tabBooks.Controls.Add(this.lblNumBooks);
@@ -289,7 +339,6 @@
             this.tabBooks.Controls.Add(this.cmbLang);
             this.tabBooks.Controls.Add(this.btnSearchBook);
             this.tabBooks.Controls.Add(this.txtTitle);
-            this.tabBooks.Controls.Add(this.txtISBN);
             this.tabBooks.Controls.Add(this.label9);
             this.tabBooks.Controls.Add(this.label10);
             this.tabBooks.Controls.Add(this.label11);
@@ -313,6 +362,7 @@
             this.lblEditBook.TabIndex = 51;
             this.lblEditBook.TabStop = true;
             this.lblEditBook.Text = "Edit Information";
+            this.lblEditBook.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lblEditBook_LinkClicked);
             // 
             // dtpPubYear
             // 
@@ -416,15 +466,6 @@
             this.txtTitle.Size = new System.Drawing.Size(143, 26);
             this.txtTitle.TabIndex = 41;
             // 
-            // txtISBN
-            // 
-            this.txtISBN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtISBN.Location = new System.Drawing.Point(24, 35);
-            this.txtISBN.Name = "txtISBN";
-            this.txtISBN.Size = new System.Drawing.Size(143, 26);
-            this.txtISBN.TabIndex = 40;
-            this.txtISBN.TextChanged += new System.EventHandler(this.txtISBN_TextChanged);
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -472,35 +513,62 @@
             this.dgvBooks.AllowUserToOrderColumns = true;
             this.dgvBooks.AllowUserToResizeColumns = false;
             this.dgvBooks.AllowUserToResizeRows = false;
-            this.dgvBooks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dgvBooks.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvBooks.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvBooks.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvBooks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvBooks.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvBooks.Location = new System.Drawing.Point(0, 152);
             this.dgvBooks.Name = "dgvBooks";
+            this.dgvBooks.ReadOnly = true;
             this.dgvBooks.RowHeadersVisible = false;
             this.dgvBooks.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dgvBooks.Size = new System.Drawing.Size(1078, 303);
             this.dgvBooks.TabIndex = 35;
-            this.dgvBooks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBook_CellClick);
+            this.dgvBooks.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBooks_CellClick);
             // 
-            // txtID
+            // tabAdmin
             // 
-            this.txtID.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtID.Location = new System.Drawing.Point(24, 35);
-            this.txtID.Mask = "000000";
-            this.txtID.Name = "txtID";
-            this.txtID.Size = new System.Drawing.Size(164, 26);
-            this.txtID.TabIndex = 1;
-            this.txtID.ValidatingType = typeof(int);
+            this.tabAdmin.Location = new System.Drawing.Point(4, 33);
+            this.tabAdmin.Name = "tabAdmin";
+            this.tabAdmin.Size = new System.Drawing.Size(1081, 491);
+            this.tabAdmin.TabIndex = 3;
+            this.tabAdmin.Text = "Admin";
+            this.tabAdmin.UseVisualStyleBackColor = true;
             // 
-            // dtpDOB
+            // txtISBN
             // 
-            this.dtpDOB.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtpDOB.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpDOB.Location = new System.Drawing.Point(567, 33);
-            this.dtpDOB.Name = "dtpDOB";
-            this.dtpDOB.Size = new System.Drawing.Size(200, 26);
-            this.dtpDOB.TabIndex = 34;
+            this.txtISBN.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtISBN.Location = new System.Drawing.Point(24, 35);
+            this.txtISBN.Mask = "000000";
+            this.txtISBN.Name = "txtISBN";
+            this.txtISBN.Size = new System.Drawing.Size(139, 26);
+            this.txtISBN.TabIndex = 52;
+            this.txtISBN.ValidatingType = typeof(int);
+            // 
+            // btnAddBook
+            // 
+            this.btnAddBook.Location = new System.Drawing.Point(45, 119);
+            this.btnAddBook.Name = "btnAddBook";
+            this.btnAddBook.Size = new System.Drawing.Size(217, 58);
+            this.btnAddBook.TabIndex = 3;
+            this.btnAddBook.Text = "Add New Book";
+            this.btnAddBook.UseVisualStyleBackColor = true;
+            this.btnAddBook.Click += new System.EventHandler(this.btnAddBook_Click);
             // 
             // frmDashboard
             // 
@@ -513,6 +581,7 @@
             this.Name = "frmDashboard";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "xxx Library Dashboard";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmDashboard_FormClosing);
             this.Load += new System.EventHandler(this.Dashboard_Load);
             this.tabDashboard.ResumeLayout(false);
             this.tabDash.ResumeLayout(false);
@@ -556,7 +625,6 @@
         private System.Windows.Forms.ComboBox cmbLang;
         private System.Windows.Forms.Button btnSearchBook;
         private System.Windows.Forms.TextBox txtTitle;
-        private System.Windows.Forms.TextBox txtISBN;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
@@ -567,5 +635,9 @@
         private System.Windows.Forms.Button btnSignUp;
         private System.Windows.Forms.MaskedTextBox txtID;
         private System.Windows.Forms.DateTimePicker dtpDOB;
+        private System.Windows.Forms.TabPage tabAdmin;
+        private System.Windows.Forms.ToolTip tipEdit;
+        private System.Windows.Forms.MaskedTextBox txtISBN;
+        private System.Windows.Forms.Button btnAddBook;
     }
 }

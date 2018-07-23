@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LibraryManagementSystem
 {
-    class Student
+    public class Student
     {
 
         private int student_id;

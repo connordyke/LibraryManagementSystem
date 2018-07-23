@@ -1,6 +1,6 @@
 ﻿namespace LibraryManagementSystem
 {
-    partial class frmNewStudent
+    partial class frmStudent
     {
         /// <summary>
         /// Required designer variable.
@@ -172,7 +172,7 @@
             this.txtID.Size = new System.Drawing.Size(199, 26);
             this.txtID.TabIndex = 8;
             // 
-            // frmNewStudent
+            // frmStudent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -192,10 +192,10 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "frmNewStudent";
+            this.Name = "frmStudent";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "New Student Sign Up";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmNewStudent_FormClosed);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmStudent_FormClosing);
             this.Load += new System.EventHandler(this.frmNewStudent_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

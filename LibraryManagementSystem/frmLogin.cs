@@ -52,6 +52,7 @@ namespace LibraryManagementSystem
                 frmDashboard dashboard = new frmDashboard();
                 dashboard.Show();
                 this.Hide();
+
             }
             else
             {
@@ -63,8 +64,8 @@ namespace LibraryManagementSystem
                 //Give focus to username textbox
                 txtUsername.Focus();
             }
-            
-
+          
         }
+
     }
 }
